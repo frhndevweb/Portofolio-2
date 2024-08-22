@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #1d1d1d;
+            color: #fff;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        header.sticky {
+            background-color: #000;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: auto;
+        }
+
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        header .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        header .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background-color: #ff6347;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        header .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .hero {
+            height: 100vh;
+            background: url('https://github.com/frhndevweb/Portofolio-2/blob/master/3203b8b0-4581-4eb8-9329-f14ccea0c4bb.jpeg?raw=true') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 700px;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero .cta {
+            background-color: #ff6347;
+            color: #fff;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero .cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta::before {
+            content: '➜';
+            margin-right: 10px;
+            display: inline-block;
+            transform: translateX(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .cta:hover::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .about, .projects, .explanation, .calculator, .social-media {
+            padding: 5rem 2rem;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .about h2, .projects h2, .explanation h2, .calculator h2, .social-media h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            color: #333;
+        }
+
+        .about h2::before, .projects h2::before, .explanation h2::before, .calculator h2::before, .social-media h2::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 50px;
+            height: 3px;
+            background-color: #ff6347;
+            transform: translateX(-50%);
+        }
+
+        .about p, .projects p, .explanation p, .calculator p, .social-media p {
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .projects .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            animation: fadeIn 2s ease;
+        }
+
+        .project-card {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-origin: center;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .calculator-wrapper {
+            max-width: 400px;
+            margin: 2rem auto;
+            background-color: #f4f4f4;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .calculator-buttons button {
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .calculator-buttons button:hover {
+            background-color: #ff6347;
+        }
+
+        .social-media-icons a {
+            display: inline-block;
+            margin: 1rem;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #ff6347;
+            transition: color 0.3s ease;
+        }
+
+        .social-media-icons a:hover {
+            color: #333;
+        }
+
+        footer {
+            background-color: #1d1d1d;
+            color: #fff;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            animation: fadeIn 3s ease;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-out {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s ease-in, transform 1s ease-in;
+        }
+
+        .fade-out.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Hannaaffiii</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#explanation">Explanation</a></li>
+                <li><a href="#calculator">Calculator</a></li>
+                <li><a href="#social-media">Social Media</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to My Portfolio</h1>
+            <p>Your one-stop destination for all things UI/UX design.</p>
+            <a href="#projects" class="cta">Explore My Work</a>
+        </div>
+    </section>
+
+    <section class="about fade-in" id="about">
+        <h2>About Me</h2>
+        <p>Hello! I'm Hannaaffiii, a passionate UI/UX designer dedicated to creating seamless and intuitive user experiences. My journey in design began with a love for creativity and technology, and I've since honed my skills to deliver impactful and user-centered designs.</p>
+    </section>
+
+<section class="projects fade-in" id="projects">
+    <h2>My Projects</h2>
+    <div class="project-grid">
+        <div class="project-card">
+            <img src="project1.jpg" alt="Project 1">
+            <h3>Project 1</h3>
+            <p><a href="https://frhndevweb.github.io/Portofolio" target="_blank">Portofolio-1</a></p>
+        </div>
+        <div class="project-card">
+            <img src="project2.jpg" alt="Project 2">
+            <h3>Project 2</h3>
+            <p><a href="https://frhndevweb.github.io/cek-khodam" target="_blank">Cek Khodam</a></p>
+        </div>
+        <div class="project-card">
+            <img src="project3.jpg" alt="Project 3">
+            <h3>Project 3</h3>
+            <p><a href="https://frhndevweb.github.io/webstore" target="_blank">Webstore</a></p>
+        </div>
+        <div class="project-card">
+            <img src="project4.jpg" alt="Project 4">
+            <h3>Project 4</h3>
+            <p><a href="https://frhndevweb.github.io/ads" target="_blank">Ads</a></p>
+        </div>
+        <div class="project-card">
+            <img src="project5.jpg" alt="Project 5">
+            <h3>Project 5</h3>
+            <p><a href="https://frhndevweb.github.io/project5" target="_blank">Project 5 description</a></p>
+        </div>
+        <div class="project-card">
+            <img src="project6.jpg" alt="Project 6">
+            <h3>Project 6</h3>
+            <p><a href="https://frhndevweb.github.io/project6" target="_blank">Project 6 description</a></p>
+        </div>
+    </div>
+</section>
+
+
+    <section class="explanation fade-in" id="explanation">
+        <h2>Explanation of My Work</h2>
+        <p>Here, I provide an overview of the methodologies and approaches used in my design process. I focus on user research, prototyping, and iterative design to create effective and engaging solutions.</p>
+    </section>
+
+    <section class="calculator fade-in" id="calculator">
+        <h2>Calculator</h2>
+        <div class="calculator-wrapper">
+            <input type="text" id="display" disabled>
+            <div class="calculator-buttons">
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="appendToDisplay('/')">/</button>
+                <button onclick="appendToDisplay('*')">*</button>
+                <button onclick="appendToDisplay('-')">-</button>
+                <button onclick="appendToDisplay('7')">7</button>
+                <button onclick="appendToDisplay('8')">8</button>
+                <button onclick="appendToDisplay('9')">9</button>
+                <button onclick="appendToDisplay('+')">+</button>
+                <button onclick="appendToDisplay('4')">4</button>
+                <button onclick="appendToDisplay('5')">5</button>
+                <button onclick="appendToDisplay('6')">6</button>
+                <button onclick="calculate()">=</button>
+                <button onclick="appendToDisplay('1')">1</button>
+                <button onclick="appendToDisplay('2')">2</button>
+                <button onclick="appendToDisplay('3')">3</button>
+                <button onclick="appendToDisplay('.')">.</button>
+                <button onclick="appendToDisplay('0')">0</button>
+            </div>
+        </div>
+        <script>
+            function clearDisplay() {
+                document.getElementById('display').value = '';
+            }
+
+            function appendToDisplay(value) {
+                document.getElementById('display').value += value;
+            }
+
+            function calculate() {
+                try {
+                    document.getElementById('display').value = eval(document.getElementById('display').value);
+                } catch (e) {
+                    document.getElementById('display').value = 'Error';
+                }
+            }
+        </script>
+    </section>
+    
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <a href="next.html" class="cta">Contact</a>
+        </div>
+    </section>
+
+
+    <section class="social-media fade-in" id="social-media">
+        <h2>Follow Me</h2>
+        <div class="social-media-icons">
+            <a href="https://twitter.com/hannaaffiii" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com/hannaaffiii" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/frhndevweb" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Hannaaffiii. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fadeInElements = document.querySelectorAll('.fade-in');
+            const fadeOutElements = document.querySelectorAll('.fade-out');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        entry.target.classList.remove('hidden');
+                        observer.unobserve(entry.target);
+                    } else {
+                        entry.target.classList.remove('visible');
+                        entry.target.classList.add('hidden');
+                    }
+                });
+            }, observerOptions);
+
+            fadeInElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            fadeOutElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
